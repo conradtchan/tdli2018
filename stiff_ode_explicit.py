@@ -18,7 +18,7 @@ u = np.zeros(len(time))             # Initialise the array; u = 0 for each times
 u[0] = 1.0                          # Intial condition, u(0) = 1
 
 for i in range(len(time)-1):       # Loop over i in 0,1,2,..,(total number of timesteps - 1)
-    # We solve for u;
+    # We solve for u(i+1);
     # du/dt = -lambda * (u - sin(t))
     # So,
     # u(i+1) = u(i) + du/dt * dt

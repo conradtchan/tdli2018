@@ -37,7 +37,7 @@ while(time < tmax):    # While time has not yet reached tmax
     print("time:",time) # Print the current time
     # Lax-Friedrichs scheme:
     #   Where the solution at x_i, t_n is u(i, n),
-    #   u(i,n+1) = 0.5*(u(i-1,n)+u(i+1,n)) + dt*(u(i+1)-u(i-1))/(2*dx)
+    #   u(i,n+1) = 0.5*(u(i-1,n)+u(i+1,n)) + dt*((u(i-1)+u(i)) - (u(i)+u(i+1)))/(2*dx)
     # For brief description, see: https://en.wikipedia.org/wiki/Lax-Friedrichs_method
     #   Note: in our case, a=1
     # NumPy trick:
