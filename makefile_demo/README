@@ -1,0 +1,19 @@
+== Makefile demo ==
+
+This is an annotated demonstration of how to structure your code into
+modules, and how to use a Makefile to easily compile your code.
+
+First, look at program.f90, and then hello.f90 and world.f90. Notice how
+the code is structured into two modules which are then link to a main
+program.
+
+Next, look at Makefile, to see how you can easily compile your code with
+a single command.
+
+To try it out, run:
+   make
+which will produce the executable 'helloworld'
+
+To run your freshly compiled program, run:
+   ./helloworld
+which should print some output.
