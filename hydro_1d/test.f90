@@ -4,10 +4,12 @@ program test
   call test_boundary
   call test_eos
   call test_primitives
+  call test_riemann
 
 end program test
 
 subroutine result(string, pass)
+  implicit none
   character(len=*),  intent(in)   :: string
   logical,            intent(in)  :: pass
 
@@ -78,6 +80,7 @@ end subroutine test_boundary
 
 subroutine test_eos
   use mod_eos, only:eos
+  implicit none
 
   integer, parameter :: nn = 3
   real :: rho(nn), eps(nn)
@@ -117,6 +120,7 @@ end subroutine test_eos
 subroutine test_primitives
   use mod_primitives, only:primitives, conserved_var
   use mod_eos, only:eos
+  implicit none
 
   integer, parameter :: nn = 2
 
@@ -151,3 +155,51 @@ subroutine test_primitives
   call result('conversion and back', error < 1.d-15)
 
 end subroutine test_primitives
+
+subroutine test_riemann
+  use mod_riemann, only:riemann
+  use mod_eos, only:eos
+  implicit none
+
+  integer, parameter :: nx = 1
+
+  real :: rho_if(0:nx+1,2)
+  real :: u_if(0:nx+1,2)
+  real :: ut_if(0:nx+1,2)
+  real :: utt_if(0:nx+1,2)
+  real :: eps_if(0:nx+1,2)
+  real :: p_if(0:nx+1,2)
+  real :: cs_if(0:nx+1,2)
+
+  real :: rhoflx(0:nx)
+  real :: momflx(0:nx)
+  real :: momtflx(0:nx)
+  real :: momttflx(0:nx)
+  real :: eneflx(0:nx)
+
+  print*,'-- Testing: Riemann solver (riemann.f90)'
+
+  rho_if(:,1) = 1.2
+  u_if(:,1)   = 2.3
+  ut_if(:,1)  = 3.4
+  utt_if(:,1) = 4.5
+  eps_if(:,1) = 5.6
+  call eos(rho_if(:,1), eps_if(:,1), p_if(:,1), cs_if(:,1), nx+2)
+
+  rho_if(:,2) = 6.7
+  u_if(:,2)   = 7.8
+  ut_if(:,2)  = 8.9
+  utt_if(:,2) = 9.1
+  eps_if(:,2) = 1.2
+  call eos(rho_if(:,2), eps_if(:,2), p_if(:,2), cs_if(:,2), nx+2)
+
+  call riemann(rho_if, u_if, ut_if, utt_if, eps_if, p_if, &
+    & cs_if, rhoflx, momflx, momtflx, momttflx, eneflx, nx)
+
+  call result('density flux', abs(rhoflx(0) - 52.254705106428737) < epsilon(rhoflx))
+  call result('momentum flux', abs(momflx(0) - 413.86141123874194) < epsilon(momflx))
+  call result('transverse momentum flux', abs(momtflx(0) - 466.00028868892792) < epsilon(momtflx))
+  call result('transverse2 momentum flux', abs(momttflx(0) - 476.29848936156981) < epsilon(momttflx))
+  call result('energy flux', abs(eneflx(0) - 5941.6019838982456) < epsilon(eneflx))
+
+end subroutine test_riemann
