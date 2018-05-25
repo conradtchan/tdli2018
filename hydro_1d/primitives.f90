@@ -39,6 +39,7 @@ contains
 
     ! Call the equation of state to determine pressure and sound speed
     call eos(u_prim(1:nn,1), u_prim(1:nn,5),pre(1:nn),cs(1:nn), nn)
+
     u_prim(1:nn,6) = pre(1:nn)
     u_prim(1:nn,7) = cs(1:nn)
 

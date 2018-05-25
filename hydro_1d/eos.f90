@@ -17,7 +17,7 @@ contains
     integer, intent(in) :: nn
 
     integer :: i
-
+    
     do i = 1, nn
       pre(i) = (gamma - 1.) * rho(i) * eps(i)
       cs(i) = sqrt(gamma * (gamma - 1.) * eps(i))
