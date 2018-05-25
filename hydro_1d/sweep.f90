@@ -100,9 +100,6 @@ contains
 
     ! Time derivatives of the conserved quantities
     do i = 1, nx
-
-      (flx(i-1,:) - flx(i,:)) / dx
-
       du_con_dt(i,1) = 1.0 / dx(i) * (rhoflx (i-1) - rhoflx (i))
       du_con_dt(i,2) = 1.0 / dx(i) * (momflx (i-1) - momflx (i))
       du_con_dt(i,3) = 1.0 / dx(i) * (momtflx (i-1) - momtflx (i))

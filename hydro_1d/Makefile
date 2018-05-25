@@ -3,7 +3,7 @@ FL = gfortran
 
 FLTFL   = -fdefault-real-8
 
-FC_OPTS = -g -O2 -fbounds-check -ffpe-trap=invalid,zero,overflow -finit-reals=nan -fbacktrace -Wall
+FC_OPTS = -g -O2 -fbounds-check -ffpe-trap=invalid,zero,overflow -finit-real=snan -fbacktrace -Wall
 FL_OPTS = $(FC_OPTS)
 
 FC_STR  = $(FC) $(FLTFL) $(FC_OPTS)
