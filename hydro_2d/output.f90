@@ -36,4 +36,25 @@ contains
 
   end subroutine write_output
 
+  subroutine read_ic(u_prim, nx, ny)
+    real,     intent(out) :: u_prim(1:nx,1:ny,7)
+    integer,  intent(in)  :: nx, ny
+
+    integer :: i, j
+    character(len=20) :: filename
+
+    write(filename, "('ic.dat')")
+
+    open(80, file=filename, status='old', form='formatted')
+
+    do j = 1, ny
+      do i = 1, nx
+         read(80,*) u_prim(i,j,:)
+      end do
+    enddo
+
+    close(80)
+
+  end subroutine read_ic
+
 end module mod_output

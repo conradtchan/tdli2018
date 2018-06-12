@@ -7,11 +7,12 @@ program hydro
 
   implicit none
 
-  real,    parameter  :: length = 1.0
-  real,    parameter  :: tmax = 20.0
-  integer, parameter  :: nx = 512
-  integer, parameter  :: ny = 512
-  integer, parameter  :: output_interval = 20
+  real,    parameter  :: lengthx = 2.50
+  real,    parameter  :: lengthy = 2.91
+  real,    parameter  :: tmax = 10.0
+  integer, parameter  :: nx = 250
+  integer, parameter  :: ny = 291
+  integer, parameter  :: output_interval = 5
 
   real, allocatable :: u_con(:,:,:)
   real, allocatable :: u_prim(:,:,:)
@@ -30,14 +31,14 @@ program hydro
   allocate(u_prim(1:nx,1:ny,7))
 
   ! Initialise grid coordinates
-  call grid(x_if, x, y_if, y, length, length, nx, ny)
+  call grid(x_if, x, y_if, y, lengthx, lengthy, nx, ny)
 
   ! Starting time
   time = 0.0
 
   ! Set up initial conditions
   print*, '-- Setting up initial conditions'
-  call setup(x, y, u_prim, length, length, nx, ny)
+  call setup(x, y, u_prim, lengthx, lengthy, nx, ny)
 
   ! Get conserved quantities
   !$omp parallel do

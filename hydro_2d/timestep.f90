@@ -1,7 +1,7 @@
 module mod_timestep
   implicit none
 
-  real, parameter :: cfl = 0.7
+  real, parameter :: cfl = 0.4
 
 contains
 

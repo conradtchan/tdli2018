@@ -45,7 +45,7 @@ sweep.o: sweep.f90 boundary.o eos.o recon.o riemann.o
 rk_step.o: rk_step.f90 primitives.o timestep.o sweep.o
 	$(FC_STR) -o rk_step.o rk_step.f90
 
-setup.o: setup.f90 eos.o
+setup.o: setup.f90 eos.o output.o
 	$(FC_STR) -o setup.o setup.f90
 
 output.o: output.f90
